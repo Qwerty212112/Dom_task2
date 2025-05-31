@@ -1,13 +1,10 @@
 let tasks = [
 ];
 
-let allTasks = [
 
-];
-
- 
 const createTaskBlock = document.querySelector('.create-task-block');
 const text = document.querySelector('.create-task-block__input');
+console.log (createTaskBlock)
 
 
 createTaskBlock.addEventListener('submit', (event) => {
@@ -18,22 +15,8 @@ createTaskBlock.addEventListener('submit', (event) => {
         completed: false,
         text: text.value,
     }
-    if (text.value) {
-        tasks.push(object)
-        allTasks.push(object)
-    } else {
-        alert('Название задачи не должно быть пустым')
-        object.text = 'Название задачи не должно быть пустым'         
-    }
-
-    if (allTasks[allTasks.length-1].text === 'Название задачи не должно быть пустым' && text.value) {
-        const taskList = document.querySelector('.tasks-list')
-        taskList.remove(div)
-
-    }
 
     tasks.push(object)
-    allTasks.push(object)
     event.preventDefault()
 
     for (let i = 0; i < tasks.length; i++) {
