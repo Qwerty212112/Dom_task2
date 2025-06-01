@@ -1,14 +1,37 @@
 let tasks = [
+    {
+        id: '1138465078061',
+        completed: false,
+        text: 'Посмотреть новый урок по ff',
+    },
+    {
+        id: '1138465078062',
+        completed: false,
+        text: 'Выполнить тест после урока',
+    },
+    {
+        id: '1138465078063',
+        completed: false,
+        text: 'Выполнить ДЗ после урока',
+    },
 ];
+let allInputValue = ['Посмотреть новый урок по JavaScript', 'Выполнить тест после урока','Выполнить ДЗ после урока'];
 
 
-const createTaskBlock = document.querySelector('.create-task-block');
+
+
+const createTaskForm = document.querySelector('.create-task-block');
 const text = document.querySelector('.create-task-block__input');
-console.log (createTaskBlock)
 
-
-createTaskBlock.addEventListener('submit', (event) => {
+createTaskForm.addEventListener('submit', (event) => {
     
+
+
+    const { target } = event
+    const taskNameInput = target.taskName
+    const inputValue = taskNameInput.value  
+    const createTaskBlock = document.querySelector('.create-task-block')
+ 
 
     let object = {
         id: Date.now().toString(),
@@ -18,8 +41,43 @@ createTaskBlock.addEventListener('submit', (event) => {
 
     tasks.push(object)
     event.preventDefault()
+    
+    const newInput = object.text;
+    let counter = 0;
 
+    allInputValue.forEach((element) => {
+       if (element === newInput) {
+        counter++
+       }
+        }
+     )
+     console.log (counter)
+     allInputValue.push(object.text)
+    
     for (let i = 0; i < tasks.length; i++) {
+        
+    if (inputValue === '') {
+        const errorMessages = document.querySelectorAll('.create-task-block .error-message-block');
+        errorMessages.forEach(message => message.remove());
+        const span = document.createElement('span')
+        span.className = 'error-message-block'
+        span.textContent = 'Название задачи не должно быть пустым'
+        tasks = [];
+        return createTaskBlock.append(span)
+
+    } else if (counter > 0) {
+        const errorMessages = document.querySelectorAll('.create-task-block .error-message-block');
+        errorMessages.forEach(message => message.remove());
+        const span = document.createElement('span')
+        span.className = 'error-message-block'
+        span.textContent = 'Задача с таким названием уже существует.'
+        tasks = [];
+        return createTaskBlock.append(span)  
+
+    }   
+
+    const errorMessages = document.querySelectorAll('.create-task-block .error-message-block');
+    errorMessages.forEach(message => message.remove());
     const tasksId = tasks[i];
     const tasksText = tasks[i];
     const taskList = document.querySelector('.tasks-list')
@@ -52,8 +110,17 @@ createTaskBlock.addEventListener('submit', (event) => {
     button.textContent = 'Удалить'
     div2.append(button)
     taskList.append(div1)
-    tasks = [];
-
     }
+    counter = 0;
+    tasks = [];
     
 })
+
+
+
+
+
+
+
+
+
